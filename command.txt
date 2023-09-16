@@ -1,0 +1,22 @@
+Command Pasang SMTP
+
+SECTION: AUTH
+smtp_login:
+    driver = plaintext
+    public_name = LOGIN
+    hide client_send = : email : password
+
+
+SECTION: TRANSPORTSTART
+smtp_nemesis:
+    driver = smtp
+    port = 587
+    hosts_require_auth = $host_address
+    hosts_require_tls = $host_address
+
+SECTION: ROUTERSTART
+smtp_nemesis:
+    driver = manualroute
+    transport = smtp_nemesis
+    domains = ! +local_domains
+    route_data = smtp,bowo-store,site
